@@ -8,9 +8,10 @@ import { SiteFooter } from "@/components/arc/blocks/site-footer/site-footer";
 import { bookCall, nav, site } from "@/content/site";
 import styles from "./chrome.module.css";
 
+// Matches on the page slug so it also works when the site is served from a sub-path or as flat .html files.
 function currentSection(pathname: string) {
-  const match = nav.find(item => item.href !== "/" && pathname.startsWith(item.href.replace(/\/$/, "")));
-  return match?.value ?? (pathname === "/" ? "home" : undefined);
+  const match = nav.find(item => item.href !== "/" && pathname.includes(item.href.replaceAll("/", "")));
+  return match?.value ?? "home";
 }
 
 export function DemoBanner() {
@@ -62,7 +63,7 @@ export function Footer() {
 /** Floating WhatsApp button. Per the brief it opens the Contact page rather than wa.me. */
 export function WhatsAppButton() {
   const pathname = usePathname();
-  if (pathname.startsWith("/contact")) return null;
+  if (currentSection(pathname) === "contact") return null;
   return (
     <a className={styles.whatsapp} href={site.whatsappHref}>
       <MessageCircle size={20} strokeWidth={1.75} aria-hidden="true" />

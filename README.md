@@ -14,3 +14,7 @@ npm run lint
 - Page layout and sections: `src/components/site/`
 - Arc components (vendored, installed with `npx shadcn@latest add @uiarc/<id>`): `src/components/arc/`
 - Photos: each `<Placeholder search="…">` names the Unsplash search to use
+
+## Preview build
+
+`python3 scripts/flatten-preview.py out preview` turns the export into flat pages with relative paths (`home.html`, `services.html`, …), so the site can be previewed from any sub-path, such as a claude.ai artifact.
