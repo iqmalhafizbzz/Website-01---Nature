@@ -1,0 +1,40 @@
+/* Page layout shared by every page. Arc blocks own their internals; this owns the rhythm around them.
+   The container matches the Arc hero (1200px wide, 40px gutters, 16px on phones) so left edges line up. */
+
+.container { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: var(--space-10); }
+.container > * { min-width: 0; }
+
+.section { padding-block: var(--space-24); }
+.tinted { background: var(--surface-muted); }
+.wash { background: var(--arc-gradient-soft); }
+
+.head { display: grid; gap: var(--space-4); margin-bottom: var(--space-12); }
+.heading { max-width: 22ch; font-family: var(--font-display); font-size: clamp(var(--text-2xl), 1.1rem + 2.4vw, var(--text-4xl)); font-weight: 500; letter-spacing: var(--tracking-display); line-height: var(--leading-display); text-wrap: balance; }
+.lead { max-width: 60ch; color: var(--text-secondary); font-size: var(--text-lg); line-height: 1.5; text-wrap: pretty; }
+.body { max-width: 62ch; color: var(--text-secondary); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
+
+/* Image placeholder: a calm rectangle naming the Unsplash search it stands for. */
+.placeholder { position: relative; display: grid; width: 100%; place-items: center; overflow: hidden; border-radius: var(--radius-surface); background: var(--placeholder); color: var(--placeholder-ink); }
+.placeholder::after { content: ""; position: absolute; inset: 0; border: 1px solid color-mix(in oklab, var(--foreground) 6%, transparent); border-radius: inherit; pointer-events: none; }
+.placeholderLabel { display: inline-flex; max-width: calc(100% - 2 * var(--space-6)); align-items: center; gap: var(--space-2); font-size: var(--text-sm); text-align: center; }
+
+/* Split: copy beside a visual. Stacks below 800px. */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: var(--space-16); }
+.splitReverse > :first-child { order: 2; }
+.splitCopy { display: grid; justify-items: start; gap: var(--space-5); }
+
+@media (max-width: 800px) {
+  .split { grid-template-columns: minmax(0, 1fr); gap: var(--space-10); }
+  .splitReverse > :first-child { order: 0; }
+}
+
+@media (max-width: 560px) {
+  .container { padding-inline: var(--space-4); }
+  .section { padding-block: var(--space-16); }
+  .head { margin-bottom: var(--space-8); }
+  .lead { font-size: var(--text-base); }
+  .placeholder { border-radius: 26px; }
+}
+
+/* Lets a tinted band or the brand wash show through an Arc block that paints its own background. */
+:is(.wash, .tinted) > .onTone { background: transparent; }

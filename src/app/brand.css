@@ -1,0 +1,39 @@
+/* Halia & Co. brand layer on top of Arc's foundation.css.
+   Deep green carries trust (ink, accent, primary buttons); ginger is the small warm detail
+   ("halia" is Malay for ginger). Every Arc component reads these semantic tokens, so this file
+   is the one place to retune the palette. Inter (variable) is the only face for now. */
+
+:root {
+  --font-display: var(--font-inter), "Inter Variable", system-ui, sans-serif;
+  --font-body: var(--font-inter), "Inter Variable", system-ui, sans-serif;
+
+  --background: oklch(98.9% .005 95);
+  --surface: oklch(100% 0 0);
+  --surface-raised: oklch(100% 0 0);
+  --surface-muted: oklch(96.4% .011 130);
+  --foreground: oklch(25% .045 165);
+  --text-secondary: oklch(42% .03 165);
+  --text-muted: oklch(54% .022 165);
+  --border: oklch(91.5% .013 140);
+  --border-subtle: oklch(95.2% .009 140);
+  --border-strong: oklch(80% .022 150);
+
+  --accent: oklch(41% .085 165);
+  --accent-strong: oklch(32% .07 165);
+  --accent-subtle: oklch(41% .085 165 / .1);
+  --accent-foreground: oklch(99% .004 95);
+  --control-on: oklch(41% .085 165);
+  --control-thumb-on: oklch(100% 0 0);
+  --control-glyph: oklch(100% 0 0);
+
+  --ginger: oklch(70% .145 58);
+  --ginger-strong: oklch(52% .13 50);
+  --ginger-subtle: oklch(70% .145 58 / .14);
+
+  /* The one marketing backdrop Arc allows: a faint green to ginger wash. */
+  --arc-gradient-soft: linear-gradient(135deg, oklch(97% .018 160), oklch(97.8% .02 70));
+
+  /* Image placeholders until the Unsplash photos are picked. */
+  --placeholder: oklch(93.5% .014 140);
+  --placeholder-ink: oklch(50% .025 160);
+}

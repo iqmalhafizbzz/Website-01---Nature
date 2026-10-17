@@ -1,0 +1,27 @@
+/* Keeps the footer's content in the same 1120px column as the page (40px gutters, 16px on phones). */
+footer.footer { --footer-pad: max(var(--space-10), calc((100% - 1120px) / 2)); }
+@media (max-width: 560px) { footer.footer { --footer-pad: var(--space-4); } }
+
+.mark { width: 12px; height: 12px; flex: none; border-radius: 4px; background: var(--ginger); }
+
+.whatsapp {
+  position: fixed; z-index: 30; right: var(--space-5); bottom: var(--space-5);
+  display: inline-flex; height: var(--control-height-lg); align-items: center; gap: var(--space-2);
+  border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 0 var(--space-5) 0 var(--space-4);
+  background: var(--surface); color: var(--foreground); box-shadow: var(--shadow-floating);
+  font-size: var(--text-sm); font-weight: 500; text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
+}
+.whatsapp svg { color: var(--accent); }
+.whatsapp:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .whatsapp:hover { border-color: var(--border-strong); } }
+
+@media (max-width: 560px) {
+  .whatsapp { right: var(--space-4); bottom: var(--space-4); width: var(--control-height-lg); justify-content: center; padding: 0; }
+  .whatsapp span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp { transition: none; }
+  .whatsapp:active { transform: none; }
+}
