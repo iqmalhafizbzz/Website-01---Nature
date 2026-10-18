@@ -15,7 +15,7 @@ function currentSection(pathname: string) {
 }
 
 export function DemoBanner() {
-  return <AnnouncementBar tone="inverted" dismissible={false} autoPlay={false} label="Demo notice" messages={[{ id: "demo", message: site.demoBanner }]} />;
+  return <AnnouncementBar tone="inverted" dismissible={false} autoPlay={false} label="Demo notice" messages={[{ id: "demo", message: site.demoBanner, action: { label: "See design option 2", href: "/option-2/" } }]} />;
 }
 
 export function Header() {

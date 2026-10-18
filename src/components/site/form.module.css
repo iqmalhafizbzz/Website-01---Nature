@@ -7,8 +7,12 @@
 .done svg { color: var(--success); }
 .doneText { max-width: 40ch; font-size: var(--text-xl); line-height: 1.35; }
 
+/* No card: the surrounding layout frames the form. */
+.bare, .bare.form { border: 0; border-radius: 0; padding: 0; background: transparent; }
+
 @media (max-width: 560px) {
   .form, .done { padding: var(--space-6) var(--space-5); border-radius: 26px; }
   .row { grid-template-columns: minmax(0, 1fr); }
   .actions > * { width: 100%; }
 }
+@media (max-width: 560px) { .bare, .bare.form { padding: 0; } }

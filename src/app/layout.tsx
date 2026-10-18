@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "@/components/arc/foundation.css";
-import "./brand.css";
 import "./globals.css";
-import { DemoBanner, Footer, Header, WhatsAppButton } from "@/components/site/SiteChrome";
 
 // Inter variable (no weight list means the variable font is served).
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -17,16 +15,11 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#fbfaf6" };
 
+// Two design options share this root: option 1 in the (option-1) route group, option 2 under /option-2/.
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-MY" data-accent="halia" className={inter.variable}>
-      <body>
-        <DemoBanner />
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <WhatsAppButton />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

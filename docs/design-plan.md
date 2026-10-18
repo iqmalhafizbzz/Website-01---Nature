@@ -84,3 +84,33 @@ Checked at 390, 768, 1024 and 1440px, with no sideways scroll on any page. Multi
 - Payroll card: its three bullets (payslips; EPF, SOCSO, EIS and PCB; EA forms) come from the Services page copy.
 - Social links are text links (LinkedIn, Facebook), not icons, because that is how Arc's footer renders them.
 - The site is set to `noindex`, because every name and contact detail is invented. Remove `robots` in `layout.tsx` if it should appear in search.
+
+---
+
+# Design option 2: Altitude layout
+
+Option 1 above stays at `/`, `/services/` and the other original paths. Option 2 is the same content laid out like [Altitude](https://altitude.xyz), using the Altitude sections on Mobbin: [card hero](https://mobbin.com/sites/sections/57e26228-53f2-4a69-ab19-b1ce00d4a374), [global account](https://mobbin.com/sites/sections/55360ea6-42d4-4647-8988-184af2b11aa6), [agencies hero](https://mobbin.com/sites/sections/30aee5b9-1884-4227-9527-76189c0efe30), [bills checklist](https://mobbin.com/sites/sections/77201da2-a761-4781-83b2-18a5e4258d75), [contact](https://mobbin.com/sites/sections/8a056de7-20c2-4a0f-ae06-bcaa124512dd), [old way diagram](https://mobbin.com/sites/sections/efd9064c-ef33-4dbc-9fed-7283811c5f49) and [blog](https://mobbin.com/sites/sections/ec8f7070-a688-4576-9944-a19b3ff5122c). It lives under `/option-2/`, and the demo banner on each option links to the other.
+
+## Measured system (at a 1440px page)
+
+| Token | Value |
+|---|---|
+| Content column | 1248px, with 96px gutters (`clamp(20px, 6.67vw, 96px)`) |
+| Nav | 72px tall, with a 1px ink rule under the column and a 12px page label below it |
+| Display heading | ~60px, line-height 1.0, tracking -0.045em, centered, 2 lines |
+| Section heading | ~48px, line-height 1.02; column headings 28px |
+| Body | 16px lead (max ~34rem), 14px text, 12px meta |
+| Hero rhythm | ~144px to the heading, then 32px to the text, 40px to the buttons and 64px to the wide visual |
+| Sections | `clamp(88px, …, 152px)` vertical padding; content-width rules between some sections |
+| Grids | 4 or 3 columns on a 32px gap; rows split one quarter heading and three quarters content |
+| Buttons | Pills: 36px in the nav, 44px in the page; filled for the main action, outlined for the second |
+| Images | Flat rectangles with a 6px radius (placeholders until photos are picked) |
+
+Ink is Halia's deep green-black instead of Altitude's pure black, and ginger only marks the logo. All tokens are in `src/components/v2/v2.module.css`, scoped to option 2. Arc's Accordion, AnimatedCounter and form fields are reused and read the same tokens.
+
+## Pages
+- **Home:** centered hero with a wide image, four centered service columns, big check lines for "why us", a three-step timeline, image beside "Who we work with", and a centered closing call to action.
+- **Services:** centered hero, then one row per service (heading left, detail right), and the partners row with a button.
+- **About:** centered hero, beliefs in three ruled columns, team as initials in rectangles, large numbers, and the visit row.
+- **How we work & fees:** four-step timeline, ruled price columns, check lines for what's included, FAQ beside its heading, and a closing call to action.
+- **Contact:** left-aligned title over a rule, then the form across the middle columns with contact details on the right, and the next-steps timeline.

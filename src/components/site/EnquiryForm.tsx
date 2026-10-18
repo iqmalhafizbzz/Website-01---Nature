@@ -22,7 +22,8 @@ function validate(fields: Fields) {
 }
 
 /** Enquiry form. This is a demo: nothing is sent, the visitor sees a confirmation in place. */
-export function EnquiryForm() {
+/** `bare` drops the card around the form, for layouts that already frame it. */
+export function EnquiryForm({ bare = false }: { bare?: boolean }) {
   const [fields, setFields] = useState<Fields>(empty);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -40,7 +41,7 @@ export function EnquiryForm() {
 
   if (sent) {
     return (
-      <div className={styles.done} role="status">
+      <div className={[styles.done, bare ? styles.bare : undefined].filter(Boolean).join(" ")} role="status">
         <CheckCircle2 size={28} strokeWidth={1.75} aria-hidden="true" />
         <p className={styles.doneText}>{contact.form.thanks}</p>
         <Button variant="secondary" onClick={() => { setFields(empty); setSubmitted(false); setSent(false); }}>Write another message</Button>
@@ -49,7 +50,7 @@ export function EnquiryForm() {
   }
 
   return (
-    <form className={styles.form} onSubmit={onSubmit} noValidate aria-label="Enquiry form">
+    <form className={[styles.form, bare ? styles.bare : undefined].filter(Boolean).join(" ")} onSubmit={onSubmit} noValidate aria-label="Enquiry form">
       <div className={styles.row}>
         <Input label="Name" name="name" autoComplete="name" value={fields.name} onChange={e => set("name")(e.target.value)} error={errors.name} required />
         <Input label="Email" name="email" type="email" autoComplete="email" value={fields.email} onChange={e => set("email")(e.target.value)} error={errors.email} required />
