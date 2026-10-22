@@ -160,8 +160,8 @@ export function CanvasShell({ items }: { items: CanvasItem[] }) {
   }, [animateTo]);
 
   const followLink = useCallback((url: URL) => {
-    const path = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
-    const target = items.find(item => item.src === path);
+    // Compare resolved paths, so this works wherever the site is served from.
+    const target = items.find(item => new URL(item.src, window.location.href).pathname === url.pathname);
     if (!target) { announce("That page is not on the canvas."); return; }
     const hash = decodeURIComponent(url.hash.slice(1));
     const el = hash ? frames.current.get(target.id)?.contentDocument?.getElementById(hash) : null;

@@ -27,6 +27,8 @@ def links(s, escaped_too=True):
     # Longest paths first so a nested path is not caught by a shorter one.
     for path, flat in sorted(pages.items(), key=lambda kv: -len(kv[0])):
         s = s.replace(f'href="{path}"', f'href="{flat}"').replace(f'\\"href\\":\\"{path}\\"', f'\\"href\\":\\"{flat}\\"')
+        # Page frames on the canvas: the iframe markup and the props that render it.
+        s = s.replace(f'src="{path}"', f'src="{flat}"').replace(f'\\"src\\":\\"{path}\\"', f'\\"src\\":\\"{flat}\\"')
         if path != "/" and escaped_too:
             s = s.replace(f'\\"{path}\\"', f'\\"{flat}\\"')
     return s
@@ -50,12 +52,13 @@ for root, _, files in os.walk(os.path.join(dst, "next")):
             t = open(p).read().replace('"/_next/"', '"next/"').replace("\ufffd", "\\uFFFD")
             open(p, "w").write(t)
 
-# Entry page: sends the viewer to home.html (relative to wherever this is hosted).
+# Entry page: opens the canvas when the build includes it, else the home page (relative to wherever this is hosted).
+start = "canvas.html" if "canvas.html" in pages.values() else "home.html"
 open(os.path.join(dst, "index.html"), "w").write(
     '<title>Halia &amp; Co. Preview</title>\n<style>:root{--bg:#fbfaf6;--fg:#10261f}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#10261f;--fg:#f3f1ea;color-scheme:dark}}'
     ':root[data-theme="dark"]{--bg:#10261f;--fg:#f3f1ea;color-scheme:dark}body{background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif;padding-block:48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}a{color:inherit}</style>\n'
-    '<meta name="claude:viewport-fit-sides" content="cover">\n<p>Opening the Halia &amp; Co. demo site. <a href="home.html">Open it</a> if nothing happens.</p>\n'
-    '<script>location.replace("home.html")</script>\n')
+    '<meta name="claude:viewport-fit-sides" content="cover">\n<p>Opening the Halia &amp; Co. demo site. <a href="%s">Open it</a> if nothing happens, or go to the <a href="home.html">home page</a>.</p>\n'
+    '<script>location.replace("%s")</script>\n' % (start, start))
 
 leftover = [f for f in os.listdir(dst) if f.endswith(".html") and re.search(r'(src|href)="/(?!/)', open(os.path.join(dst, f)).read())]
 print("pages:", ", ".join(sorted(pages.values())))
