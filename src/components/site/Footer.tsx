@@ -30,7 +30,7 @@ export function Footer() {
           </div>
         </div>
         <div className={s.footBottom}>
-          <Link className={s.footBrand} href="/"><span className={s.mark} aria-hidden="true" />{site.name}</Link>
+          <Link className={s.footBrand} href="/" prefetch={false}><span className={s.mark} aria-hidden="true" />{site.name}</Link>
           <span className={s.copyright}>© 2026 {site.name} {site.tagline}</span>
           <ul className={s.footLinks}>
             <li><a href="/privacy/">Privacy notice</a></li>

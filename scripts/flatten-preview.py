@@ -16,13 +16,15 @@ for root, _, files in os.walk(src):
     path = "/" if rel == "." else f"/{rel}/"
     pages[path] = "home.html" if rel == "." else rel.replace(os.sep, "-") + ".html"
 
-# Links rendered in the browser (menus, option 2 paths) keep site paths; this maps them to the flat files on click.
-router = ("<script>(function(){var m=%s;document.addEventListener('click',function(e){"
-          "var a=e.target.closest&&e.target.closest('a[href^=\"/\"]');if(!a)return;"
-          "var f=m[a.getAttribute('href')];if(f){e.preventDefault();location.href=f;}},true);})();</script>") % json.dumps(pages)
+# Links rendered in the browser (such as the mobile menu) keep site paths; this maps them to the flat files on click.
+router = ("<script>(function(){var m=%s,f={};for(var k in m)f[m[k]]=m[k];"
+          "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;"
+          "var h=a.getAttribute('href'),t=m[h]||f[h];if(!t)return;"
+          # Capture phase on document runs before Next's Link handler, which would route to the site root.
+          "e.preventDefault();e.stopImmediatePropagation();location.href=t;},true);})();</script>") % json.dumps(pages)
 
 def links(s, escaped_too=True):
-    # Longest paths first so /option-2/services/ is not caught by /services/.
+    # Longest paths first so a nested path is not caught by a shorter one.
     for path, flat in sorted(pages.items(), key=lambda kv: -len(kv[0])):
         s = s.replace(f'href="{path}"', f'href="{flat}"').replace(f'\\"href\\":\\"{path}\\"', f'\\"href\\":\\"{flat}\\"')
         if path != "/" and escaped_too:
@@ -44,7 +46,7 @@ for root, _, files in os.walk(os.path.join(dst, "next")):
             open(p, "w").write(t)
         elif f.endswith(".js"):
             # Literal U+FFFD in string literals (polyfills) becomes the equivalent escape; the host rejects the raw char.
-            # Site links inside the JS stay as they are: option 2 prefixes them at runtime, and the click handler maps them.
+            # Site links inside the JS stay as they are; the click handler maps them.
             t = open(p).read().replace('"/_next/"', '"next/"').replace("\ufffd", "\\uFFFD")
             open(p, "w").write(t)
 
@@ -52,7 +54,7 @@ for root, _, files in os.walk(os.path.join(dst, "next")):
 open(os.path.join(dst, "index.html"), "w").write(
     '<title>Halia &amp; Co. Preview</title>\n<style>:root{--bg:#fbfaf6;--fg:#10261f}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#10261f;--fg:#f3f1ea;color-scheme:dark}}'
     ':root[data-theme="dark"]{--bg:#10261f;--fg:#f3f1ea;color-scheme:dark}body{background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif;padding-block:48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}a{color:inherit}</style>\n'
-    '<meta name="claude:viewport-fit-sides" content="cover">\n<p>Opening the Halia &amp; Co. demo site. <a href="home.html">Design option 1</a> or <a href="option-2.html">design option 2</a>.</p>\n'
+    '<meta name="claude:viewport-fit-sides" content="cover">\n<p>Opening the Halia &amp; Co. demo site. <a href="home.html">Open it</a> if nothing happens.</p>\n'
     '<script>location.replace("home.html")</script>\n')
 
 leftover = [f for f in os.listdir(dst) if f.endswith(".html") and re.search(r'(src|href)="/(?!/)', open(os.path.join(dst, f)).read())]

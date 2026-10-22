@@ -34,7 +34,7 @@ export function Header() {
   return (
     <header className={s.header}>
       <div className={s.bar}>
-        <Link className={s.brand} href="/"><span className={s.mark} aria-hidden="true" />{site.name}</Link>
+        <Link className={s.brand} href="/" prefetch={false}><span className={s.mark} aria-hidden="true" />{site.name}</Link>
         <nav aria-label="Main"><ul className={s.navPill}>{items}</ul></nav>
         <div className={s.headerEnd}>
           <a className={s.textLink} href={site.whatsappHref}>WhatsApp us</a>
