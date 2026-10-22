@@ -16,3 +16,7 @@ npm run lint
 - Photos: each `<Placeholder search="…">` is a grey rectangle that names the Unsplash search to use
 
 `python3 scripts/flatten-preview.py out preview` turns the export into flat pages with relative paths, for hosting the site under any sub-path.
+
+## Page canvas (development only)
+
+`npm run dev`, then open http://localhost:3000/canvas/ to see every page live, side by side, at desktop width. The canvas has pan, zoom, fit all, reset view, movable pages and copyable names. Pages are listed in `src/canvas/registry.ts`, and the canvas code lives in `src/canvas/`. Normal builds leave the canvas out; build with `HALIA_CANVAS=1` to include it, for a private preview.

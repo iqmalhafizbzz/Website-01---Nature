@@ -2,10 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import "@/components/arc/foundation.css";
 import "./globals.css";
-import { Header } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
-import { site } from "@/content/site";
-import s from "@/components/site/site.module.css";
 
 // Inter (variable) is the main face; a mono face carries Titan-style labels, buttons and figures.
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -20,17 +16,11 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#ffffff" };
 
+// Site pages get their header and footer from (site)/layout.tsx; the dev-only canvas at /canvas/ has none.
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-MY" className={`${inter.variable} ${mono.variable}`}>
-      <body>
-        <p className={s.demo}>{site.demoBanner}</p>
-        <div className={s.frame}>
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
