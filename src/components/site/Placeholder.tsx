@@ -1,14 +1,10 @@
-import { ImageIcon } from "lucide-react";
-import styles from "./ui.module.css";
+import s from "./site.module.css";
 
-/** A stand-in for a photo that is not picked yet. `search` is the Unsplash search from the Content Pack. */
-export function Placeholder({ search, ratio = "4 / 3", className }: { search: string; ratio?: string; className?: string }) {
+/** A plain grey rectangle in place of a photo; `search` is the Unsplash search from the Content Pack. */
+export function Placeholder({ search, ratio, fill = false }: { search: string; ratio?: string; fill?: boolean }) {
   return (
-    <div role="img" aria-label={`Photo placeholder: ${search}`} className={[styles.placeholder, className].filter(Boolean).join(" ")} style={{ aspectRatio: ratio }} data-photo={search}>
-      <span className={styles.placeholderLabel} aria-hidden="true">
-        <ImageIcon size={16} strokeWidth={1.75} />
-        {search}
-      </span>
+    <div role="img" aria-label={`Photo placeholder: ${search}`} className={[s.ph, fill ? s.phFill : undefined].filter(Boolean).join(" ")} style={ratio ? { aspectRatio: ratio } : undefined} data-photo={search}>
+      <span className={s.phLabel} aria-hidden="true">{search}</span>
     </div>
   );
 }

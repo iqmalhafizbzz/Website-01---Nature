@@ -1,10 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
 import "@/components/arc/foundation.css";
 import "./globals.css";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { site } from "@/content/site";
+import s from "@/components/site/site.module.css";
 
-// Inter variable (no weight list means the variable font is served).
+// Inter (variable) is the main face; a mono face carries Titan-style labels, buttons and figures.
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://accounting-demo.primaxoft.com"),
@@ -13,13 +18,19 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export const viewport: Viewport = { themeColor: "#fbfaf6" };
+export const viewport: Viewport = { themeColor: "#ffffff" };
 
-// Two design options share this root: option 1 in the (option-1) route group, option 2 under /option-2/.
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-MY" data-accent="halia" className={inter.variable}>
-      <body>{children}</body>
+    <html lang="en-MY" className={`${inter.variable} ${mono.variable}`}>
+      <body>
+        <p className={s.demo}>{site.demoBanner}</p>
+        <div className={s.frame}>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }

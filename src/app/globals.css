@@ -1,3 +1,65 @@
+/* Halia & Co. design tokens, after Titan (titan.com, via Mobbin): a white page held in a framed
+   column with hairline sides, warm grey cards, near-black ink, mono uppercase labels and buttons.
+   Type spec from the brief owner: hero 42px Semibold, section headings 30px Semibold, body 16px Medium.
+   Ink is Halia's deep green-black; ginger only marks the logo and the small "Free" badge.
+   The Arc semantic tokens are mapped here too, so Arc's accordion, counter and form fields match. */
+
+:root {
+  --bg: oklch(100% 0 0);
+  --ink: oklch(20% .022 165);
+  --ink-soft: oklch(56% .012 165);
+  --muted: oklch(48% .012 165);
+  --line: oklch(92% .004 90);
+  --card: oklch(95.8% .006 80);
+  --card-strong: oklch(93.2% .008 80);
+  --placeholder: oklch(90.5% .003 90);
+  --placeholder-ink: oklch(52% .006 90);
+  --dark: oklch(19% .018 165);
+  --dark-ink: oklch(97% .004 90);
+  --dark-muted: oklch(72% .008 165);
+  --dark-line: oklch(30% .015 165);
+  --ginger: oklch(72% .15 58);
+
+  --font-sans: var(--font-inter), "Inter Variable", system-ui, sans-serif;
+  --font-code: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --size-hero: 2.625rem;     /* 42px */
+  --size-section: 1.875rem;  /* 30px */
+  --size-title: 1.25rem;     /* 20px card and row titles */
+  --size-body: 1rem;         /* 16px */
+  --size-small: .875rem;     /* 14px */
+  --size-label: .75rem;      /* 12px mono labels */
+
+  --frame: 1256px;
+  --pad: 32px;
+  --section-y: 96px;
+  --radius-card: 16px;
+
+  /* Arc components follow the same palette. */
+  --background: var(--bg);
+  --surface: var(--bg);
+  --surface-muted: var(--card);
+  --foreground: var(--ink);
+  --text-secondary: var(--muted);
+  --text-muted: var(--muted);
+  --border: var(--line);
+  --border-subtle: var(--line);
+  --border-strong: oklch(82% .006 90);
+  --accent: var(--ink);
+  --accent-strong: var(--ink);
+  --accent-subtle: oklch(20% .022 165 / .07);
+  --control-on: var(--ink);
+  --font-display: var(--font-code);
+  --font-body: var(--font-sans);
+  --radius-control: 12px;
+  --radius-panel: 14px;
+  --radius-surface: var(--radius-card);
+}
+
+@media (max-width: 640px) {
+  :root { --pad: 16px; --section-y: 64px; }
+}
+
 *,
 *::before,
 *::after {
@@ -6,18 +68,19 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 88px;
+  scroll-padding-top: 96px;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  letter-spacing: var(--tracking-body);
-  line-height: var(--leading-body);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  font-weight: 500;
+  letter-spacing: -.011em;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
